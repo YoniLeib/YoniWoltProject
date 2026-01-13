@@ -19,7 +19,7 @@ namespace ViewModel
         protected override BaseEntity CreateModel(BaseEntity entity)
         {
             Restaurants r = entity as Restaurants;
-            r.CityId = CityDB.SelectById((int)reader["CityId"]);
+            r.CityId = CitiesDB.SelectById((int)reader["CityId"]);
             r.Name = reader["name"].ToString();
             r.OpenTime = (DateTime)reader["openTime"];
             r.CloseTime = (DateTime)reader["closeTime"];

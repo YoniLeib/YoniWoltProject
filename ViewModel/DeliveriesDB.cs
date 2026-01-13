@@ -12,17 +12,18 @@ namespace ViewModel
     {
         public DeliveriesList SelectAll()
         {
-            command.CommandText = $"SELECT Orders.*, Deliveries.CityId, Deliveries.CourierId, " +
-                $"Deliveries.Status, Deliveries.DeliveryDate\r\nFROM " +
-                $"(Deliveries INNER JOIN\r\n Orders ON Deliveries.Id = Orders.Id)";
+            command.CommandText = $"SELECT  Deliveries.Id, Deliveries.CityId, Deliveries.CourierId," +
+                $" Deliveries.Status, Deliveries.DeliveryDate, Orders.UserId, Orders.RestaurantId," +
+                $" Orders.EstimatedTime FROM (Deliveries INNER JOIN  " +
+                $"  Orders ON Deliveries.Id = Orders.Id)";
             DeliveriesList pList = new DeliveriesList(base.Select());
             return pList;
         }
         protected override BaseEntity CreateModel(BaseEntity entity)
         {
             Deliveries d = entity as Deliveries;
-            d.CityId = CityDB.SelectById((int)reader["CityId"]);
-            d.CourierId = CouriersDB.SelectById((int)reader["menuId"]);
+            d.CityId = CitiesDB.SelectById((int)reader["cityId"]);
+            d.CourierId = CouriersDB.SelectById((int)reader["courierId"]);
             d.Status = reader["status"].ToString();
             d.DeliveryDate = (DateTime)reader["deliveryDate"];
             base.CreateModel(entity);
@@ -69,7 +70,7 @@ namespace ViewModel
             Deliveries d = entity as Deliveries;
             if (d != null)
             {
-                string sqlStr = $"Insert INTO  Couriers (CityId,CourierId,Status,DeliveryDate) " +
+                string sqlStr = $"Insert INTO  Deliveries (CityId,CourierId,Status,DeliveryDate) " +
                     $"VALUES (@dCityId,@dCourierId,@dStatus,@dDeliveryDate)";
 
                 command.CommandText = sqlStr;
@@ -94,8 +95,7 @@ namespace ViewModel
             if (d != null)
             {
                 string sqlStr = $"UPDATE Deliveries  SET CityId=@dCityId , " +
-                    $"CourierId=@dCourierId , " +
-                    $"Status=@dStatus , DeliveryDate=@dDeliveryDate WHERE ID=@id";
+                    $"CourierId=@dCourierId , Status=@dStatus , DeliveryDate=@dDeliveryDate WHERE ID=@id";
 
                 command.CommandText = sqlStr;
                 command.Parameters.Add(new OleDbParameter("@dCityId", d.CityId.Id));
@@ -114,7 +114,6 @@ namespace ViewModel
                 updated.Add(new ChangeEntity(base.CreateUpdatedSQL, entity));
             }
         }
-
 
 
     }

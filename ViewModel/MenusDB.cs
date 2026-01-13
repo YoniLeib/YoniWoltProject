@@ -70,7 +70,7 @@ namespace ViewModel
             if (m != null)
             {
                 string sqlStr = $"UPDATE Menus  SET Title=@mTitle , " +
-                    $"RestaurantId=@mRestaurantId  WHERE ID=@id";
+                    $"RestaurantId=@mRestaurantId  WHERE ID=@mid";
 
                 command.CommandText = sqlStr;
                 command.Parameters.Add(new OleDbParameter("@mTitle", m.Title));

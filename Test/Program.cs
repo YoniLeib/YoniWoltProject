@@ -1,20 +1,22 @@
 ﻿using Model;
 using ViewModel;
+using API_Inteface;
+using API_project;
 
 //--------------------------------------------------------------------//
 
-//CityDB ctdb = new();
-//CityList ctList = ctdb.SelectAll();
-//foreach (City ct in ctList)
+//CitiesDB ctdb = new();
+//CitiesList ctList = ctdb.SelectAll();
+//foreach (Cities ct in ctList)
 //    Console.WriteLine(ct.CityName);
 
-//City cityToUpdate = ctList[0];
+//Cities cityToUpdate = ctList[0];
 //cityToUpdate.CityName += "אאא";
 //ctdb.Update(cityToUpdate);
 //int x = ctdb.SaveChanges();
 //Console.WriteLine($"{x} rows were updated");
 
-//City new_city = new City { CityName = "sderot" };
+//Cities new_city = new Cities { CityName = "sderot" };
 //ctdb.Insert(new_city);
 //int y = ctdb.SaveChanges();
 //Console.WriteLine($"{y} rows were inserted");
@@ -275,5 +277,16 @@ using ViewModel;
 //vdb.Delete(vList.Last());
 //int z = vdb.SaveChanges();
 //Console.WriteLine($"{z} rows were deleted");
+
+//--------------------------------------------------------------------//
+
+ApiService apiService = new ApiService();
+
+CitiesList d = await apiService.GetAllCities();
+
+foreach (Cities city in d)
+{
+    await Console.Out.WriteLineAsync(city.CityName);
+}
 
 //--------------------------------------------------------------------//

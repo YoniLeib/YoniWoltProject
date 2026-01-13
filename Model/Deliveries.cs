@@ -9,12 +9,12 @@ namespace Model
 {
     public class Deliveries : Orders
     {
-        private City cityId;
+        private Cities cityId;
         private Couriers courierId;
         private string status;
         private DateTime deliveryDate;
 
-        public City CityId { get => cityId; set => cityId = value; }
+        public Cities CityId { get => cityId; set => cityId = value; }
         public Couriers CourierId { get => courierId; set => courierId = value; }
         public string Status { get => status; set => status = value; }
         public DateTime DeliveryDate { get => deliveryDate; set => deliveryDate = value; }

@@ -73,7 +73,7 @@ namespace ViewModel
             catch (Exception e)
             {
 
-                System.Diagnostics.Debug.WriteLine(
+                Throw new Exeption(
                     e.Message + "\nSQL:" + command.CommandText);
             }
             finally
@@ -106,7 +106,7 @@ namespace ViewModel
             }
             catch (Exception e)
             {
-                System.Diagnostics.Debug.WriteLine(e.Message + "\nSQL:" + command.CommandText);
+                throw new Exception(e.Message + "\nSQL:" + command.CommandText);
             }
             finally
             {
@@ -214,7 +214,7 @@ namespace ViewModel
             catch (Exception ex)
             {
                 trans.Rollback();
-                System.Diagnostics.Debug.WriteLine(ex.Message + "\n SQL:" + command.CommandText);
+                throw new Exception(ex.Message + "\n SQL:" + command.CommandText);
             }
             finally
             {

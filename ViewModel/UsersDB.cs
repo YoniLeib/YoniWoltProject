@@ -19,11 +19,12 @@ namespace ViewModel
         protected override BaseEntity CreateModel(BaseEntity entity)
         {
             Users u = entity as Users;
-            u.CityID = CityDB.SelectById((int)reader["CityID"]);
+            u.CityID = CitiesDB.SelectById((int)reader["CityID"]);
             u.FirstName = reader["firstName"].ToString();
-            u.LastName = reader["firstName"].ToString();
+            u.LastName = reader["lastName"].ToString();
             u.Email = reader["email"].ToString();
-            u.PhoneNumber = int.Parse(reader["phoneNumber"].ToString());
+            u.Password = reader["Password"].ToString();
+            u.PhoneNumber = reader["phoneNumber"].ToString();
             u.BirthDate = (DateTime)reader["birthDate"];
             base.CreateModel(entity);
             return u;
@@ -70,6 +71,7 @@ namespace ViewModel
                 command.Parameters.Add(new OleDbParameter("@uLastName", u.LastName));
                 command.Parameters.Add(new OleDbParameter("@uPhoneNumber", u.PhoneNumber));
                 command.Parameters.Add(new OleDbParameter("@uEmail", u.Email));
+                command.Parameters.Add(new OleDbParameter("@uPassword", u.Password));
                 command.Parameters.Add(new OleDbParameter("@uBirthDate", u.BirthDate));
             }
         }
@@ -81,7 +83,7 @@ namespace ViewModel
             {
                 string sqlStr = $"UPDATE Users  SET CityID=@uCityID , " +
                 $"FirstName=@uFirstName , LastName=@uLastName , " +
-                $"PhoneNumber=@uPhoneNumber ,Email=@uEmail ," +
+                $"PhoneNumber=@uPhoneNumber ,Email=@uEmail , Password=@uPassword" +
                 $"BirthDate=@uBirthDate WHERE ID=@id";
 
                 command.CommandText = sqlStr;
@@ -90,6 +92,7 @@ namespace ViewModel
                 command.Parameters.Add(new OleDbParameter("@uLastName", u.LastName));
                 command.Parameters.Add(new OleDbParameter("@uPhoneNumber", u.PhoneNumber));
                 command.Parameters.Add(new OleDbParameter("@uEmail", u.Email));
+                command.Parameters.Add(new OleDbParameter("@uPassword", u.Password));
                 command.Parameters.Add(new OleDbParameter("@uBirthDate", u.BirthDate));
                 command.Parameters.Add(new OleDbParameter("@id", u.Id));
             }

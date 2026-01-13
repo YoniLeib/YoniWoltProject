@@ -8,43 +8,43 @@ using System.Threading.Tasks;
 
 namespace ViewModel
 {
-    public class CityDB : BaseDB
+    public class CitiesDB : BaseDB
     {
-        public CityList SelectAll()
+        public CitiesList SelectAll()
         {
-            command.CommandText = $"SELECT * FROM City";
-            CityList groupList = new CityList(base.Select());
+            command.CommandText = $"SELECT * FROM Cities";
+            CitiesList groupList = new CitiesList(base.Select());
             return groupList;
         }
 
         protected override BaseEntity CreateModel(BaseEntity entity)
         {
-            City ct = entity as City;
+            Cities ct = entity as Cities;
             ct.CityName = reader["cityName"].ToString();
             base.CreateModel(entity);
             return ct;
         }
         public override BaseEntity NewEntity()
         {
-            return new City();
+            return new Cities();
         }
-        static private CityList list = new CityList();
+        static private CitiesList list = new CitiesList();
 
-        public static City SelectById(int id)
+        public static Cities SelectById(int id)
         {
-            CityDB db = new CityDB();
+            CitiesDB db = new CitiesDB();
             list = db.SelectAll();
 
-            City g = list.Find(item => item.Id == id);
+            Cities g = list.Find(item => item.Id == id);
             return g;
         }
 
         protected override void CreateDeletedSQL(BaseEntity entity, OleDbCommand cmd)
         {
-            City ct = entity as City;
+            Cities ct = entity as Cities;
             if (ct != null)
             {
-                string sqlStr = $"DELETE FROM City where id=@ctid";
+                string sqlStr = $"DELETE FROM Cities where id=@ctid";
 
                 command.CommandText = sqlStr;
                 command.Parameters.Add(new OleDbParameter("@ctid", ct.Id));
@@ -52,10 +52,10 @@ namespace ViewModel
         }
         protected override void CreateInsertdSQL(BaseEntity entity, OleDbCommand cmd)
         {
-            City ct = entity as City;
+            Cities ct = entity as Cities;
             if (ct != null)
             {
-                string sqlStr = $"Insert INTO  City (CityName) VALUES (@cName)";
+                string sqlStr = $"Insert INTO  Cities (CityName) VALUES (@cName)";
 
                 command.CommandText = sqlStr;
                 command.Parameters.Add(new OleDbParameter("@ctName", ct.CityName));
@@ -64,10 +64,10 @@ namespace ViewModel
 
         protected override void CreateUpdatedSQL(BaseEntity entity, OleDbCommand cmd)
         {
-            City ct = entity as City;
+            Cities ct = entity as Cities;
             if (ct != null)
             {
-                string sqlStr = $"UPDATE City  SET CityName=@ctCityName WHERE ID=@id";
+                string sqlStr = $"UPDATE Cities  SET CityName=@ctCityName WHERE ID=@id";
 
                 command.CommandText = sqlStr;
                 command.Parameters.Add(new OleDbParameter("@ctCityName", ct.CityName));
