@@ -73,7 +73,7 @@ namespace ViewModel
             catch (Exception e)
             {
 
-                Throw new Exeption(
+                throw new Exception(
                     e.Message + "\nSQL:" + command.CommandText);
             }
             finally
